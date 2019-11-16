@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import { ThrowStmt } from "@angular/compiler";
 
 @Injectable()
 export class HeroesService {
@@ -61,9 +60,8 @@ export class HeroesService {
       casa: "Marvel"
     }
   ];
-  constructor() {
-    console.log("Servicio listo para usar!!");
-  }
+
+  constructor() {}
 
   getHeroes(): Heroe[] {
     return this.heroes;
@@ -73,16 +71,21 @@ export class HeroesService {
     return this.heroes[idx];
   }
 
-  buscarHeroes(termino: string) {
+  buscarHeroes(termino: string): Heroe[] {
     let heroesArr: Heroe[] = [];
     termino = termino.toLowerCase();
 
-    for (let heroe of this.heroes) {
+    for (let i = 0; i < this.heroes.length; i++) {
+      let heroe = this.heroes[i];
+
       let nombre = heroe.nombre.toLowerCase();
+
       if (nombre.indexOf(termino) >= 0) {
+        heroe.idx = i;
         heroesArr.push(heroe);
       }
     }
+
     return heroesArr;
   }
 }
@@ -93,4 +96,5 @@ export interface Heroe {
   img: string;
   aparicion: string;
   casa: string;
+  idx?: number;
 }
